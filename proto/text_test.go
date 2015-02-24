@@ -1,7 +1,7 @@
 // Go support for Protocol Buffers - Google's data interchange format
 //
 // Copyright 2010 The Go Authors.  All rights reserved.
-// https://github.com/golang/protobuf
+// https://github.com/scalingdata/protobuf
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -39,9 +39,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/golang/protobuf/proto"
+	"github.com/scalingdata/protobuf/proto"
 
-	proto3pb "./proto3_proto"
 	pb "./testdata"
 )
 
@@ -408,29 +407,3 @@ Message <nil>
 	}
 }
 
-func TestProto3Text(t *testing.T) {
-	tests := []struct {
-		m    proto.Message
-		want string
-	}{
-		// zero message
-		{&proto3pb.Message{}, ``},
-		// zero message except for an empty byte slice
-		{&proto3pb.Message{Data: []byte{}}, ``},
-		// trivial case
-		{&proto3pb.Message{Name: "Rob", HeightInCm: 175}, `name:"Rob" height_in_cm:175`},
-		// empty map
-		{&pb.MessageWithMap{}, ``},
-		// non-empty map; current map format is the same as a repeated struct
-		{
-			&pb.MessageWithMap{NameMapping: map[int32]string{1234: "Feist"}},
-			`name_mapping:<key:1234 value:"Feist" >`,
-		},
-	}
-	for _, test := range tests {
-		got := strings.TrimSpace(test.m.String())
-		if got != test.want {
-			t.Errorf("\n got %s\nwant %s", got, test.want)
-		}
-	}
-}

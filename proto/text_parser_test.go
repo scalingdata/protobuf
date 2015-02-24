@@ -1,7 +1,7 @@
 // Go support for Protocol Buffers - Google's data interchange format
 //
 // Copyright 2010 The Go Authors.  All rights reserved.
-// https://github.com/golang/protobuf
+// https://github.com/scalingdata/protobuf
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -36,9 +36,8 @@ import (
 	"reflect"
 	"testing"
 
-	proto3pb "./proto3_proto"
 	. "./testdata"
-	. "github.com/golang/protobuf/proto"
+	. "github.com/scalingdata/protobuf/proto"
 )
 
 type UnmarshalTextTest struct {
@@ -441,21 +440,6 @@ func TestRepeatedEnum(t *testing.T) {
 	}
 	if !Equal(pb, exp) {
 		t.Errorf("Incorrect populated \nHave: %v\nWant: %v", pb, exp)
-	}
-}
-
-func TestProto3TextParsing(t *testing.T) {
-	m := new(proto3pb.Message)
-	const in = `name: "Wallace" true_scotsman: true`
-	want := &proto3pb.Message{
-		Name:         "Wallace",
-		TrueScotsman: true,
-	}
-	if err := UnmarshalText(in, m); err != nil {
-		t.Fatal(err)
-	}
-	if !Equal(m, want) {
-		t.Errorf("\n got %v\nwant %v", m, want)
 	}
 }
 

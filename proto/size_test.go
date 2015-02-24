@@ -1,7 +1,7 @@
 // Go support for Protocol Buffers - Google's data interchange format
 //
 // Copyright 2012 The Go Authors.  All rights reserved.
-// https://github.com/golang/protobuf
+// https://github.com/scalingdata/protobuf
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -35,9 +35,8 @@ import (
 	"log"
 	"testing"
 
-	proto3pb "./proto3_proto"
 	pb "./testdata"
-	. "github.com/golang/protobuf/proto"
+	. "github.com/scalingdata/protobuf/proto"
 )
 
 var messageWithExtension1 = &pb.MyMessage{Count: Int32(7)}
@@ -103,17 +102,6 @@ var SizeTests = []struct {
 	{"unrecognized", &pb.MoreRepeated{XXX_unrecognized: []byte{13<<3 | 0, 4}}},
 	{"extension (unencoded)", messageWithExtension1},
 	{"extension (encoded)", messageWithExtension3},
-	// proto3 message
-	{"proto3 empty", &proto3pb.Message{}},
-	{"proto3 bool", &proto3pb.Message{TrueScotsman: true}},
-	{"proto3 int64", &proto3pb.Message{ResultCount: 1}},
-	{"proto3 uint32", &proto3pb.Message{HeightInCm: 123}},
-	{"proto3 float", &proto3pb.Message{Score: 12.6}},
-	{"proto3 string", &proto3pb.Message{Name: "Snezana"}},
-	{"proto3 bytes", &proto3pb.Message{Data: []byte("wowsa")}},
-	{"proto3 bytes, empty", &proto3pb.Message{Data: []byte{}}},
-	{"proto3 enum", &proto3pb.Message{Hilarity: proto3pb.Message_PUNS}},
-
 	{"map field", &pb.MessageWithMap{NameMapping: map[int32]string{1: "Rob", 7: "Andrew"}}},
 	{"map field with message", &pb.MessageWithMap{MsgMapping: map[int64]*pb.FloatingPoint{0x7001: &pb.FloatingPoint{F: Float64(2.0)}}}},
 	{"map field with bytes", &pb.MessageWithMap{ByteMapping: map[bool][]byte{true: []byte("this time for sure")}}},
